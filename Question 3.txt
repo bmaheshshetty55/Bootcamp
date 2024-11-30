@@ -1,0 +1,87 @@
+Shashwath works for a healthcare company that collects patient information from various
+sources. As part of a data preprocessing task, he has been assigned to handle a dataset
+containing patient IDs stored in an unsorted linked list. Due to the merging of multiple
+databases, there's a possibility of having duplicate patient IDs in the list. His task is to
+develop a program to eliminate these duplicates from the linked list before further processing.
+Help to solve the problem
+Input:
+The input for the program will be the unsorted linked list containing patient IDs.
+Output:
+The output will be the modified linked list with duplicate patient IDs removed
+=====================================================
+// Node class for the linked list
+class Node {
+    int data;
+    Node next;
+    Node(int val) {
+        data = val;
+        next = null;
+    }
+}
+public class Main {
+    public static void removeDuplicates(Node head) {
+        Node current = head; 
+        while (current != null && current.next != null) {
+            Node prev = current;
+            Node temp = current.next;
+
+            while (temp != null) {
+                if (current.data == temp.data) {
+                    // If duplicate is found, remove the node
+                    prev.next = temp.next;
+                    temp = prev.next; // Move to the next node
+                } else {
+                    prev = temp;
+                    temp = temp.next;
+                }
+            }
+            current = current.next;
+        }
+    }
+
+    // Function to insert a new node at the end of the list
+    public static Node insert(Node head, int value) {
+        Node newNode = new Node(value);  
+        if (head == null) {
+            head = newNode; 
+        } else {
+            Node temp = head;
+            while (temp.next != null) {
+                temp = temp.next;  // Traverse to the last node
+            }
+            temp.next = newNode;  // Add the new node at the end
+        }
+        return head;  // Return the updated head
+    }
+
+    // Function to display the linked list
+    public static void display(Node head) {
+        Node temp = head;
+        while (temp != null) {
+            System.out.print(temp.data + " ");  // Print the node's data
+            temp = temp.next;  // Move to the next node
+        }
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+        Node head = null;  // Start with an empty linked list
+
+        // Insert some test data into the linked list
+        head = insert(head, 10);
+        head = insert(head, 20);
+        head = insert(head, 10);  // Duplicate
+        head = insert(head, 30);
+        head = insert(head, 20);  // Duplicate
+        head = insert(head, 40);
+
+        System.out.print("Original list: ");
+        display(head);  // Display the original linked list
+
+        // Remove duplicates
+        removeDuplicates(head);
+
+        System.out.print("List after removing duplicates: ");
+        display(head);  // Display the modified linked list without duplicates
+    }
+}

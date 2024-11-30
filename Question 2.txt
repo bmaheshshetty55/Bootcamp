@@ -1,0 +1,80 @@
+Anna works in a library, and she has a huge pile of books that need to be sorted by their titles.
+The pile is too large for her to handle all at once, so she decides to use a strategy where she
+breaks the pile into smaller stacks, sorts each stack individually, and then merges the stacks
+together to form the final sorted pile. Anna uses the merge sort technique to do this.
+The merge sort process works by dividing the pile of books into two halves, recursively
+sorting each half, and then merging the sorted halves back together.
+Problem:
+Anna needs your help to implement the merge sort algorithm to sort the titles of the books.
+Write a program to sort an array of book titles using the merge sort algorithm.
+Input Format:
+An array of n book titles (as strings) to be sorted.
+Output Format:
+Print the sorted list of book titles.
+===========================================
+import java.util.*;
+
+public class Main {
+
+    // Function to merge two sorted arrays
+    public static List<String> merge(List<String> left, List<String> right) {
+        List<String> result = new ArrayList<>();
+        int i = 0, j = 0;
+
+        // Merge the two arrays
+        while (i < left.size() && j < right.size()) {
+            if (left.get(i).compareTo(right.get(j)) < 0) {
+                result.add(left.get(i++));
+            } else {
+                result.add(right.get(j++));
+            }
+        }
+
+        // Add any remaining elements from left or right
+        while (i < left.size()) result.add(left.get(i++));
+        while (j < right.size()) result.add(right.get(j++));
+
+        return result;
+    }
+
+    // Merge Sort function to divide and sort the array
+    public static List<String> mergeSort(List<String> books) {
+        if (books.size() <= 1) return books;
+
+        // Divide the list into two halves
+        int mid = books.size() / 2;
+        List<String> left = new ArrayList<>(books.subList(0, mid));
+        List<String> right = new ArrayList<>(books.subList(mid, books.size()));
+
+        // Sort and merge
+        return merge(mergeSort(left), mergeSort(right));
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Step 1: Input the number of books
+        System.out.print("Enter the number of books: ");
+        int n = scanner.nextInt();
+        scanner.nextLine();  // Consume the newline after reading the integer
+
+        // Step 2: Input the book titles
+        List<String> books = new ArrayList<>();
+        System.out.println("Enter the book titles: ");
+        for (int i = 0; i < n; ++i) {
+            books.add(scanner.nextLine());
+        }
+
+        // Step 3: Sort the books
+        List<String> sortedBooks = mergeSort(books);
+
+        // Step 4: Output the sorted book titles
+        System.out.println("Sorted book titles: ");
+        for (String book : sortedBooks) {
+            System.out.println(book);
+        }
+
+        // Close the scanner
+        scanner.close();
+    }
+}

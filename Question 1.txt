@@ -1,0 +1,57 @@
+Imagine a determined young athlete named Alex who is training for a big competition. As
+part of his training, he must climb a set of n stairs to reach the top of a training tower. Each
+time he practises, he can either take a single step (climb 1 stair) or take a bigger leap (climb 2
+stairs). Alex is curious about how many different ways he can reach the top of the stairs based
+on his climbing patterns.
+Alex decides to record his attempts to find out how many unique sequences of steps he takes
+to reach the top.
+================================================
+Step 1: Input the number of stairs
+Step 2: Handle base cases
+Step 3: Use Dynamic Programming to calculate the number of ways
+int prev2 = 1;  // ways(0)
+    int prev1 = 1;  // ways(1)
+for (int i = 2; i <= n; ++i) {
+        int current = prev1 + prev2;  // ways(i) = ways(i-1) + ways(i-2)
+        prev2 = prev1;  // Update prev2 to prev1 (ways(i-2))
+        prev1 = current;  // Update prev1 to current (ways(i))
+    }
+    Step 4: Print the final result
+============================================================
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+        // Create a Scanner object for user input
+        Scanner scanner = new Scanner(System.in);
+
+
+        System.out.print("Enter the number of stairs: ");
+        i
+        if (n == 0) {
+            System.out.println("1");
+            return;
+        }
+
+             System.out.println("1");  
+            return;
+        }
+
+        
+        int prev2 = 1;  // ways(0)
+        int prev1 = 1;  // ways(1)
+
+        for (int i = 2; i <= n; ++i) {
+            int current = prev1 + prev2;  
+            prev2 = prev1;  
+            prev1 = current;  
+        }
+
+        
+        System.out.println(prev1); 
+        
+       
+    }
+}
+f
