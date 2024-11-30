@@ -1,0 +1,161 @@
+import java.util.Scanner;
+
+
+class Book {
+    int id;
+    String title;
+    Book next;
+    Book prev;
+
+    Book(int id, String title) {
+        this.id = id;
+        this.title = title;
+        this.next = null;
+        this.prev = null;
+    }
+}
+
+class BookRentalSystem {
+    private Book head;
+    private Book tail;  
+
+    BookRentalSystem() {
+        head = null;
+        tail = null;
+    }
+    void insertBook(int id, String title) {
+        Book newBook = new Book(id, title);
+        if (head == null) {
+            head = newBook;  
+            tail = newBook;  
+        } else {
+            tail.next = newBook;  
+            newBook.prev = tail; 
+            tail = newBook; 
+        }
+    }
+
+    void removeBook(int id) {
+        Book temp = head;
+        while (temp != null) {
+            if (temp.id == id) {
+                // If the book is found, adjust the pointers
+                if (temp.prev != null) {
+                    temp.prev.next = temp.next;  // Link previous book to next book
+                } else {
+                    head = temp.next;  // If it was the first book, move head
+                }
+
+                if (temp.next != null) {
+                    temp.next.prev = temp.prev;  // Link next book to previous book
+                } else {
+                    tail = temp.prev;  // If it was the last book, move tail
+                }
+
+                return; 
+            }
+            temp = temp.next;  // Move to the next book
+        }
+        System.out.println("Book with ID " + id + " not found!");
+    }
+
+    // Traverse the list forward
+    void traverseForward() {
+        Book temp = head;
+        if (temp == null) {
+            System.out.println("No books available!");
+            return;
+        }
+
+        while (temp != null) {
+            System.out.println("ID: " + temp.id + ", Title: " + temp.title);
+            temp = temp.next;
+        }
+    }
+
+
+    void traverseBackward() {
+        Book temp = tail;
+        if (temp == null) {
+            System.out.println("No books available!");
+            return;
+        }
+
+        while (temp != null) {
+            System.out.println("ID: " + temp.id + ", Title: " + temp.title);
+            temp = temp.prev;
+        }
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        BookRentalSystem system = new BookRentalSystem();
+
+        // Input number of books
+        System.out.print("Enter number of books: ");
+        int n = scanner.nextInt();
+        scanner.nextLine();  
+
+    
+        for (int i = 0; i < n; ++i) {
+            System.out.print("Enter book ID and title: ");
+            int id = scanner.nextInt();
+            scanner.nextLine();  
+            String title = scanner.nextLine();
+            system.insertBook(id, title);  // Insert book into the system
+        }
+
+       
+        while (true) {
+            System.out.println("\nChoose an operation:");
+            System.out.println("1. Insert a new book");
+            System.out.println("2. Remove a book by ID");
+            System.out.println("3. Traverse books forward");
+            System.out.println("4. Traverse books backward");
+            System.out.println("5. Exit");
+            System.out.print("Enter your choice: ");
+            int option = scanner.nextInt();
+            scanner.nextLine();  
+            if (option == 1) {
+                System.out.print("Enter book ID and title to insert: ");
+                int id = scanner.nextInt();
+                scanner.nextLine();  
+                String title = scanner.nextLine();
+                system.insertBook(id, title);
+                System.out.println("Book inserted successfully.");
+            } else if (option == 2) {
+                System.out.print("Enter book ID to remove: ");
+                int id = scanner.nextInt();
+                system.removeBook(id);
+            } else if (option == 3) {
+                System.out.println("\nBooks in forward order:");
+                system.traverseForward();
+            } else if (option == 4) {
+                System.out.println("\nBooks in backward order:");
+                system.traverseBackward();
+            } else if (option == 5) {
+                break;  
+            } else {
+                System.out.println("Invalid option! Please try again.");
+            }
+        }
+
+        scanner.close();  // Close the scanner
+    }
+}
+A book rental system allows users to browse through available books and keep track of
+borrowed books. The system keeps the books in a doubly linked list, where each node
+represents a book with its title and ID. A user can insert a book into the list, delete a book,
+and also browse books in forward and backward directions.
+You are required to implement this book rental system using a doubly linked list.
+Input Format:
+The first line contains the number of books n.
+The next n lines contain each book's ID and title.
+You need to perform the following operations:
+Insert a new book (title, ID).
+Remove a book by ID.
+Traverse the book list forward.
+Traverse the book list backward.
+Output Format: Print the updated list after each operation.

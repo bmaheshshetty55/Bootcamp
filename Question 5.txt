@@ -1,0 +1,63 @@
+import java.util.Scanner;
+
+// Student class to hold name and marks
+class Student {
+    String name;
+    int marks;
+
+    // Constructor to initialize the student object
+    Student(String name, int marks) {
+        this.name = name;
+        this.marks = marks;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Reading the number of students
+        System.out.print("Enter the number of students: ");
+        int n = scanner.nextInt();
+        scanner.nextLine();  // Consume the newline character left by nextInt()
+
+        // Array to store student objects
+        Student[] students = new Student[n];
+
+        // Read student details (name and marks)
+        for (int i = 0; i < n; i++) {
+            System.out.print("Enter name of student " + (i + 1) + ": ");
+            String name = scanner.nextLine();
+
+            System.out.print("Enter marks for " + name + ": ");
+            int marks = scanner.nextInt();
+            scanner.nextLine();  // Consume the newline character left by nextInt()
+
+            // Create student object and add it to the array
+            students[i] = new Student(name, marks);
+        }
+
+        // Calculate the total sum of marks
+        int totalSum = 0;
+        for (int i = 0; i < n; i++) {
+            totalSum += students[i].marks;
+        }
+
+        // Find the student with maximum marks
+        int maxMarks = students[0].marks;
+        String topStudent = students[0].name;
+        for (int i = 1; i < n; i++) {
+            if (students[i].marks > maxMarks) {
+                maxMarks = students[i].marks;
+                topStudent = students[i].name;
+            }
+        }
+
+        // Output results
+        System.out.println("\nTotal sum of marks: " + totalSum);
+        System.out.println("Student with the maximum marks: " + topStudent + " (" + maxMarks + " marks)");
+
+        // Close the scanner
+        scanner.close();
+    }
+}
